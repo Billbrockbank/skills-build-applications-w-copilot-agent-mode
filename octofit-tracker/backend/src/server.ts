@@ -9,9 +9,13 @@ app.use(express.json())
 app.use('/api', apiRouter)
 
 app.get('/api/health', (_request, response) => {
+  const codespaceUrl = process.env.CODESPACE_NAME 
+    ? `https://${process.env.CODESPACE_NAME}-8000.app.github.dev`
+    : getApiBaseUrl()
+  
   response.json({
     status: 'ok',
-    apiBaseUrl: getApiBaseUrl(),
+    apiBaseUrl: codespaceUrl,
     mongoUrl: connectionString,
   })
 })
