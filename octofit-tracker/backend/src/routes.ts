@@ -1,7 +1,12 @@
 import { Router } from 'express'
+import { getApiBaseUrl } from './config/api.js'
 import { Activity, LeaderboardEntry, Team, User, Workout } from './models.js'
 
 export const apiRouter = Router()
+
+apiRouter.get('/config', (_request, response) => {
+  response.json({ apiBaseUrl: getApiBaseUrl() })
+})
 
 apiRouter.get('/users', async (_request, response) => {
   response.json(await User.find().sort({ name: 1 }))
